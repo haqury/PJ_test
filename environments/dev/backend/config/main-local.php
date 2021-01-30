@@ -2,6 +2,13 @@
 
 $config = [
     'components' => [
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=pj-mysql;dbname=pj',
+            'username' => 'root',
+            'password' => 'test',
+            'charset' => 'utf8',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '',
