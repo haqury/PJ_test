@@ -1,0 +1,32 @@
+version: '3'
+services:
+  nginx:
+    container_name: "pj-nginx"
+    image: "nginx"
+    volumes:
+      - ./../:/var/www/pj:cached
+      - ./logs/nginx:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    environment:
+      - TZ=Europe/Moscow
+
+  mysql:
+    container_name: "pj-mysql"
+    image: "mysql:5.7"
+    ports:
+      - 33060:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - TZ=Europe/Moscow
+
+  php:
+    container_name: "pj-php"
+    build: ./php
+    volumes:
+      - ./../:/var/www/pj:cached
+    environment:
+      - XDEBUG_CONFIG=remote_host=host.docker.internal remote_enable=1
+      - PHP_IDE_CONFIG=serverName=Docker
+      - TZ=Europe/Moscow

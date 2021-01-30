@@ -16,6 +16,15 @@ return [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON,
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if (!$response->isSuccessful && $response->data !== null) {
+                    $response->data = new \v2\controllers\Response\ExceptionResponse($response);
+                }
+            },
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
